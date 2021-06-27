@@ -219,7 +219,7 @@ describe 'bind' do
         it { is_expected.to compile.with_all_deps }
 
         # dnsruby build dependencies
-        if os_facts[:os]['name'] == 'Debian'
+        if os_facts[:os]['name'] == 'Ubuntu'
           [
             'g++',
             'make',
@@ -227,7 +227,7 @@ describe 'bind' do
             it do
               is_expected.to contain_package(pkg).with(
                 ensure: 'present',
-                before: 'Package[dnsruby]',
+                before: 'Package[ruby-dnsruby]',
               )
             end
           end
@@ -238,12 +238,12 @@ describe 'bind' do
           is_expected.to contain_file('/usr/bin/mkdir').with(
             ensure: 'link',
             target: '/bin/mkdir',
-            before: 'Package[dnsruby]',
+            before: 'Package[ruby-dnsruby]',
           )
         end
 
         it do
-          is_expected.to contain_package('dnsruby').with(
+          is_expected.to contain_package('ruby-dnsruby').with(
             ensure: 'present',
             provider: 'puppet_gem',
           )
